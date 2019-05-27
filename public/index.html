@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Cotação da Moeda</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="chosen.css">
+    <link rel="stylesheet" type="text/css" href="ImageSelect.css">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="chosen.jquery.js"></script>
+    <script src="ImageSelect.jquery.js"></script>
+    <script src="jquery-1.11.0.min.jquery.js"></script>
+</head>
+<body>
+
+<div class="container">
+<div class="position">
+    <h2>Cotação da Moeda</h2>
+    <select class="form-control my-select" id="Moeda">
+        <option value="0" data-img-src="img/brasil.png">Selecionar Moeda</option>
+        <option value="1" id="euro">EURO</option>
+        <option value="2" id="usd">USD</option>
+    </select>
+    <br>
+    <select class="form-control" id="Cotacao">
+        <option>Selecionar Valor</option>
+    </select>
+    
+</div>
+</div>
+
+</body>
+</html>
+
+<script>
+
+
+
+
+     $(document).ready(function(){
+            var url = '';
+        $(document).on('change', '#Moeda', function(){
+            $("#Cotacao").html('<option value="">Selecione</option>');
+            if(($( "select#Moeda" ).val()) == 1){
+                    url = 'https://api.exchangeratesapi.io/latest';
+                }
+            if(($( "select#Moeda" ).val()) == 2){
+                url = 'https://api.exchangeratesapi.io/latest?base=USD';
+            }
+            $.getJSON(url, function(data){
+                console.log(data.rates);
+                $.each(data.rates, function(k,v) {
+                   $('#Cotacao').append('<option>'+ k + ' - ' + v +'</option>');
+                    
+  
+                });
+            
+            });
+        });
+    });
+
+
+</script>
